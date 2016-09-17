@@ -2,7 +2,7 @@
   <ion-content>
   <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
     <ul >
-    <li ng-repeat="item in memories"> {{ item.data }} </li>
+    <li ng-repeat="item in memories"> {{ item.data }} - [{{item.lat}},{{item.lon}}] </li>
 </ul>
 <hr>
        <form novalidate="novalidate" name="loginForm">
