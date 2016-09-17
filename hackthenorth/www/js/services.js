@@ -1,50 +1,36 @@
-angular.module('starter.services', [])
-
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
-
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+angular.module('starter')
+  .factory('APIreq', function(jwtHelper, $ionicPopup, $state, $http) {
+    return {
+      tokenValid: function() {
+        if (window.localStorage['LOCAL_TOKEN_KEY'] != null && jwtHelper.isTokenExpired(window.localStorage['LOCAL_TOKEN_KEY']) == false) {
+          return true;
+        } else {
+          return false;
         }
-      }
-      return null;
-    }
-  };
-});
+      },
+
+
+      signup: function(name, email, password) {
+        $http.defaults.headers.common['x-access-token'] = window.localStorage['LOCAL_TOKEN_KEY'];
+        return $http.post("http://104.197.29.38/api/signup", {name: name,password: password,email: email});
+      },
+
+
+   login: function(email, password) {
+    $http.defaults.headers.common['x-access-token'] = window.localStorage['LOCAL_TOKEN_KEY'];
+
+        return $http.post("http://104.197.29.38/api/login", {email: email,password: password});
+      },
+
+         profile: function() {
+          $http.defaults.headers.common['x-access-token'] = window.localStorage['LOCAL_TOKEN_KEY'];
+          return $http.get("http://104.197.29.38/api/user");
+      },
+         
+
+
+
+    };
+  })
+
+
