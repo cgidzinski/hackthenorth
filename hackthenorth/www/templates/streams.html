@@ -1,0 +1,12 @@
+<ion-view view-title="Streams">
+  <ion-content>
+  <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+<ion-list>
+  <ion-item ng-repeat="stream in streams" class="item-thumbnail-left"  href="#/app/stream/{{stream.url}}">
+        <img ng-src="{{stream.image}}">
+    <h2>{{stream.name}}</h2>
+    <p>{{stream.streamer}}</p>
+  </ion-item>
+</ion-list>
+  </ion-content>
+</ion-view>

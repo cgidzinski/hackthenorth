@@ -1,0 +1,27 @@
+<ion-view view-title="Event">
+  <ion-content>
+  <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+
+
+    <div align="center">
+        <img width="100%" src="{{event.image}}">
+    <h3>{{event.name}}</h3>
+    <h3>{{event.date}}</h3>
+        <h3>{{event.location}}</h3>
+</div>
+<hr>
+<h5>Info: {{event.info}}</h5>
+    <h5>Rules: {{event.rules}}</h5>
+ <hr>  
+     <h5>Max Teams: {{event.maxTeams}}</h5>
+<h5>Max Team Size: {{event.maxTeamSize}}</h5>
+<h5>Required Key: {{event.reqkey}}</h5>
+<hr> 
+<h5>Teams: {{event.teams}}</h5>
+<hr>
+<h5>ID: {{event._id}}</h5>
+    <h5>Reqpass: {{event.reqpass}}</h5>
+    <h5>Locked: {{event.locked}}</h5>
+
+  </ion-content>
+</ion-view>

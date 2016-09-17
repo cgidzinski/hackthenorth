@@ -1,0 +1,26 @@
+<ion-view view-title="Profile">
+  <ion-content>
+  <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+    
+    <div align="center">
+        <img width="100%" src="http://www.designers-revolution.com/wp-content/uploads/2013/05/User-Avatar-Silhouettes5.jpg">
+    <h3>{{profile.local.name}}</h3>
+    <h3>{{profile.local.gamertag}}</h3>
+        <h6>[{{profile.local.group}}]</h6>
+</div>
+<hr>
+<h5>Email: {{profile.local.email}}</h5>
+<h5>Bio: {{profile.local.bio}}</h5>
+<h5>Games: {{profile.local.games}}</h5>
+<hr>
+<h5>Ban: {{profile.local.ban}}</h5>
+<h5>Tag: {{profile.local.tag}}</h5>
+    <h5>Key: {{profile.local.key}}</h5>
+    <h5>Keytype: {{profile.local.keyType}}</h5>
+    <h5>HiddenInfo: {{profile.local.hiddenInfo}}</h5>
+    <h5>Token: {{profile.local.token}}</h5>
+    <h5>ID: {{profile._id}}</h5>
+   
+    
+  </ion-content>
+</ion-view>
