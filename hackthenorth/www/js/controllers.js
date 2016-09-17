@@ -53,7 +53,6 @@ angular.module('starter.controllers', ['angular-jwt'])
 
 
 
->>>>>>> origin/master
 .controller('HomeCtrl', function($scope, $state, APIreq, $http) {
   $scope.$on('$ionicView.enter', function(e) {
     if (APIreq.tokenValid() == false) {
