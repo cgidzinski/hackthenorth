@@ -1,0 +1,26 @@
+<ion-view title="Login">
+    <ion-content>
+        <form novalidate="novalidate" name="loginForm">
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <i class="icon ion-person"></i>
+                    <input autocapitalize="off" type="email" name="email" placeholder="Email" ng-model="loginData.email"
+                           required>
+                </label>
+                <label class="item item-input">
+                    <i class="icon ion-locked"></i>
+                    <input type="password" name="password" placeholder="Password" ng-model="loginData.password"
+                           required>
+                </label>
+            </div>
+            <div class="padding">
+                <button ng-disabled="!loginForm.$valid" class="button icon ion-log-in button-block button-royal"
+                        ng-click="doLogin()">
+                    Login
+                </button>
+                <button class="button button-block button-royal button-outline" ng-click="goSignup()">Don't have an account yet?</button>
+
+            </div>
+        </form>
+    </ion-content>
+</ion-view>
