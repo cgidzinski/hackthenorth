@@ -26,6 +26,10 @@ angular.module('starter')
           $http.defaults.headers.common['x-access-token'] = window.localStorage['LOCAL_TOKEN_KEY'];
 
           return $http.get("http://104.197.29.38:8080/api/user");
+      },
+        park: function() {
+
+          return $http.jsonp("https://api.namara.io/v0/data_sets/a490dbb3-38ff-42a2-b81f-3cddc5d31b79/data/en-0?api_key=c6cbe02af40424b4401b3dc6f877c6cfe2aaa288ba215268f29d47c0dccc781b");
       }
 
 

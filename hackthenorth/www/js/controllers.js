@@ -47,7 +47,24 @@ angular.module('starter.controllers', ['angular-jwt'])
 
 
 
+.controller('ParkCtrl', function($scope, $state, APIreq, $http) {
+  $scope.$on('$ionicView.enter', function(e) {
 
+ $scope.doRefresh = function() {
+       $scope.result = "";
+  $http.get("https://api.namara.io/v0/data_sets/a490dbb3-38ff-42a2-b81f-3cddc5d31b79/data/en-0?api_key=c6cbe02af40424b4401b3dc6f877c6cfe2aaa288ba215268f29d47c0dccc781b")
+    .success(function(data, status, headers,config){
+
+      $scope.result = data; // for UI
+      $scope.$broadcast('scroll.refreshComplete');
+    })
+    .error(function(data, status, headers,config){
+      console.log('data error');
+    });
+ }
+$scope.doRefresh();
+  });
+})
 
 
 
@@ -60,20 +77,51 @@ angular.module('starter.controllers', ['angular-jwt'])
     }
   });
 var options = {timeout: 10000, enableHighAccuracy: true};
+
+setInterval(function(){ 
+
+//
 $cordovaGeolocation.getCurrentPosition(options).then(function(position){
  
     var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
  
     var mapOptions = {
       center: latLng,
-      zoom: 15,
+      zoom: 20,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
  
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    //
+//Wait until the map is loaded
+google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+ 
+  var marker = new google.maps.Marker({
+      map: $scope.map,
+      animation: google.maps.Animation.DROP,
+      position: latLng
+  });      
+ 
+  // var infoWindow = new google.maps.InfoWindow({
+  //     content: "Here I am!"
+  // });
+ 
+  // google.maps.event.addListener(marker, 'click', function () {
+  //     infoWindow.open($scope.map, marker);
+  // }); 
+ 
+});
+    //
       }, function(error){
     console.log("Could not get location");
   });
+//
+
+
+}, 500);
+
+
+
  })
 
 
@@ -101,4 +149,3 @@ $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 $scope.doRefresh();
   });
 })
-

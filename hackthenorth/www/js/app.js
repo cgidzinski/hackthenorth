@@ -65,6 +65,15 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
       }
     }
   })
+    .state('app.park', {
+    url: '/park',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/park.html',
+        controller: 'ParkCtrl'
+      }
+    }
+  })
 
 
   // if none of the above states are matched, use this as the fallback
