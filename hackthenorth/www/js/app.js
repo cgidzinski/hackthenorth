@@ -74,7 +74,15 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
       }
     }
   })
-
+    .state('app.memory', {
+    url: '/memory',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/memory.html',
+        controller: 'MemoryCtrl'
+      }
+    }
+  })
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/home');

@@ -1,0 +1,24 @@
+<ion-view view-title="Memories">
+  <ion-content>
+  <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+    <ul >
+    <li ng-repeat="item in memories"> {{ item.data }} </li>
+</ul>
+<hr>
+       <form novalidate="novalidate" name="loginForm">
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <i class="icon ion-person"></i>
+                    <input autocapitalize="off" type="data" name="data" placeholder="memory" ng-model="memory.data" required>
+                </label>
+
+            </div>
+            <div class="padding">
+                <button class="button icon ion-log-in button-block button-royal" ng-click="sendMemory()">
+                    Send Memory
+                </button>
+                
+            </div>
+        </form>
+  </ion-content>
+</ion-view>

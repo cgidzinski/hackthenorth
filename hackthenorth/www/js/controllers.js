@@ -76,55 +76,44 @@ $scope.doRefresh();
       $state.go('login');
     }
   });
-var options = {timeout: 10000, enableHighAccuracy: true};
-
-setInterval(function(){ 
-
-//
-$cordovaGeolocation.getCurrentPosition(options).then(function(position){
- 
-    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
- 
-    var mapOptions = {
-      center: latLng,
-      zoom: 20,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
- 
-    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    //
-//Wait until the map is loaded
-google.maps.event.addListenerOnce($scope.map, 'idle', function(){
- 
-  var marker = new google.maps.Marker({
-      map: $scope.map,
-      animation: google.maps.Animation.DROP,
-      position: latLng
-  });      
- 
-  // var infoWindow = new google.maps.InfoWindow({
-  //     content: "Here I am!"
-  // });
- 
-  // google.maps.event.addListener(marker, 'click', function () {
-  //     infoWindow.open($scope.map, marker);
-  // }); 
- 
-});
-    //
-      }, function(error){
-    console.log("Could not get location");
-  });
-//
-
-
-}, 500);
-
-
 
  })
 
+.controller('MemoryCtrl', function($scope, $state, APIreq, $http, $ionicPopup) {
+  $scope.$on('$ionicView.enter', function(e) {
+    if (APIreq.tokenValid() == false) {
+      $state.go('login');
+    }
+ $scope.doRefresh = function() {
+ APIreq.getmemory().then(function(response){
+    if (response.data.success == true)
+    {
+      console.log(response.data.message);
+      $scope.memories = response.data.message;
+      $scope.$broadcast('scroll.refreshComplete');
+    }
+    else
+    {
+      $state.go('login');
+    }
+        
+    });
+ }
+$scope.doRefresh();
 
+$scope.memory = {};
+  $scope.sendMemory = function() {
+   
+    APIreq.postmemory("location", $scope.memory.data, "text").then(function(res) {
+          if (res.data.success == true) {
+            var alertPopup = $ionicPopup.alert({title: 'Memory Submitted'});
+            $scope.memory.data = "";
+         $scope.doRefresh(); 
+          } 
+        });
+    };
+  });
+})
 
 
 .controller('ProfileCtrl', function($scope, $state, APIreq, $http) {
