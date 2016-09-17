@@ -83,6 +83,7 @@ var mapOptions = {
 //        
         var map = new google.maps.Map(document.getElementById("map"), mapOptions);
         var marker = google.maps.Marker;
+        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 //
         
       navigator.geolocation.getCurrentPosition(function(pos) {
@@ -90,8 +91,10 @@ var mapOptions = {
             marker = new google.maps.Marker({
                 position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
                 map: map,
-                title: "You"
+                title: "You",
+                icon: image
             });
+            marker.setAnimation(google.maps.Animation.BOUNCE);
         });
 
 
