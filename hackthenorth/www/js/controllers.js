@@ -137,14 +137,19 @@ $scope.doRefresh();
 
 $scope.memory = {};
   $scope.sendMemory = function() {
-   
-    APIreq.postmemory("location", $scope.memory.data, "text").then(function(res) {
+   //
+navigator.geolocation.getCurrentPosition(function(pos) {
+     
+ APIreq.postmemory(pos.coords.latitude,pos.coords.longitude, $scope.memory.data, "text").then(function(res) {
           if (res.data.success == true) {
             var alertPopup = $ionicPopup.alert({title: 'Memory Submitted'});
             $scope.memory.data = "";
          $scope.doRefresh(); 
           } 
         });
+        });
+   //
+   
     };
   });
 })

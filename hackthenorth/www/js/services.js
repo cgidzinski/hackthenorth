@@ -35,9 +35,9 @@ angular.module('starter')
           $http.defaults.headers.common['x-access-token'] = window.localStorage['LOCAL_TOKEN_KEY'];
           return $http.get("http://104.197.29.38:8080/api/memory");
       },
-        postmemory: function(location, data, type) {
+        postmemory: function(lat,lon, data, type) {
           $http.defaults.headers.common['x-access-token'] = window.localStorage['LOCAL_TOKEN_KEY'];
-          return $http.post("http://104.197.29.38:8080/api/memory", {location: location,data: data,type:type});
+          return $http.post("http://104.197.29.38:8080/api/memory", {lat:lat, lon:lon,data: data,type:type});
       }
 
 
