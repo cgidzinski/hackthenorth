@@ -24,9 +24,9 @@ angular.module('starter')
 
          profile: function() {
           $http.defaults.headers.common['x-access-token'] = window.localStorage['LOCAL_TOKEN_KEY'];
+
           return $http.get("http://104.197.29.38/api/user");
-      },
-         
+      }
 
 
 
