@@ -75,7 +75,8 @@ $scope.doRefresh();
     if (APIreq.tokenValid() == false) {
       $state.go('login');
     }
-
+var lat;
+var lon;
      $scope.doRefresh = function() {
  APIreq.getmemory().then(function(response){
     if (response.data.success == true)
@@ -95,15 +96,16 @@ $scope.doRefresh();
             });
               google.maps.event.addListener(pmarker, 'click', function() {
 
-  navigator.geolocation.getCurrentPosition(function(pos) {
-if (getDistanceFromLatLonInKm(pmarker.lat,pmarker.lon,pos.coords.latitude,pos.coords.longitude) < 0.004){
-  alert(pmarker.data)
+  
+    var dist =getDistanceFromLatLonInKm(pmarker.lat,pmarker.lon,lat,lon)
+if (dist < 0.025){
+  alert(pmarker.title+" "+ dist)
 }else
 {
-  alert("Too far away!")
+  alert("Too far away! " + dist)
 }
                 
-        });
+        
 
                 
 
@@ -139,6 +141,8 @@ var mapOptions = {
 
       navigator.geolocation.getCurrentPosition(function(pos) {
             map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+            lat = pos.coords.latitude;
+            lon=pos.coords.longitude;
             marker = new google.maps.Marker({
                 position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
                 map: map,
@@ -165,6 +169,8 @@ google.maps.event.addListenerOnce($scope.map, 'idle', function(){
 setInterval(function(){ 
 
 navigator.geolocation.getCurrentPosition(function(pos) {
+  lat = pos.coords.latitude;
+            lon=pos.coords.longitude;
             
             map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
 
@@ -177,7 +183,7 @@ navigator.geolocation.getCurrentPosition(function(pos) {
 
 
 
-}, 1500);
+}, 5000);
 
 
 });
