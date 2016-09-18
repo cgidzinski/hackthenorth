@@ -94,21 +94,23 @@ var lon;
                 title: $scope.memories[i]._id,
                 lat:$scope.memories[i].lat,
                 lon:$scope.memories[i].lon,
-                data:$scope.memories[i].data
+                data:$scope.memories[i].data,
+                author:$scope.memories[i].author,
+                date:$scope.memories[i].date
             });
                pmarker.setAnimation(google.maps.Animation.BOUNCE);
               //console.log(pmarker)
               google.maps.event.addListener(pmarker, 'click', function() {
-    		var dist = getDistanceFromLatLonInKm(this.lat,this.lon,lat,lon)
-			//if (dist < 0.025){
+        var dist = getDistanceFromLatLonInKm(this.lat,this.lon,lat,lon)
+      //if (dist < 0.025){
 
-			var post = "<div class='post'>"+this.data+"</div>";
-			  $ionicPopup.alert({title: "Memory", template: post});
-			//}else
-			//{
-			 // alert("Too Far away!")
-			//}
-			                
+      var post = "<div class='post'>"+this.data+"<br>"+this.date+"<p>Author: "+ this.author+"</p></div>";
+        $ionicPopup.alert({title: "Text Memory", template: post});
+      //}else
+      //{
+       // alert("Too Far away!")
+      //}
+                      
         
 
                 
@@ -133,8 +135,8 @@ var mapOptions = {
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             disableDefaultUI: true,
             draggable: false,
-			scrollwheel: false,
-			panControl: false
+      scrollwheel: false,
+      panControl: false
 
         }; 
 //        
