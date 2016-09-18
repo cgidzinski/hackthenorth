@@ -1,0 +1,25 @@
+<ion-view view-title="Waterloo Points of Interest">
+  <ion-content>
+  <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+    
+
+
+
+
+
+<div class="list">
+
+    <a class="item" ng-repeat="item in result" href="https://www.google.ca/maps/place/{{ item.address }}">
+      <h2>{{ item.facility }}</h2>
+      <p>{{ item.type }}</p>
+      <p>{{ item.address }}</p>
+    </a>
+
+    Loading
+
+</div>
+
+
+
+  </ion-content>
+</ion-view>

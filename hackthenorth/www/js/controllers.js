@@ -67,7 +67,25 @@ $scope.doRefresh();
   });
 })
 
+.controller('PoiCtrl', function($scope, $state, APIreq, $http) {
+  $scope.$on('$ionicView.enter', function(e) {
 
+ $scope.doRefresh = function() {
+       $scope.result = "";
+       
+  $http.get("https://api.namara.io/v0/data_sets/30c7a679-9b89-45fd-ae33-0e5991695f61/data/en-0?api_key=c6cbe02af40424b4401b3dc6f877c6cfe2aaa288ba215268f29d47c0dccc781b")
+    .success(function(data, status, headers,config){
+
+      $scope.result = data; // for UI
+      $scope.$broadcast('scroll.refreshComplete');
+    })
+    .error(function(data, status, headers,config){
+      console.log('data error');
+    });
+ }
+$scope.doRefresh();
+  });
+})
 
 
 
@@ -104,7 +122,7 @@ var lon;
         var dist = getDistanceFromLatLonInKm(this.lat,this.lon,lat,lon)
       //if (dist < 0.025){
 
-      var post = "<div class='post'>"+this.data+"<br>"+this.date+"<p>Author: "+ this.author+"</p></div>";
+      var post = "<div class='post'>"+this.data+"<br><br><p>Date: "+this.date+"</p><p>Author: "+ this.author+"</p></div>";
         $ionicPopup.alert({title: "Text Memory", template: post});
       //}else
       //{

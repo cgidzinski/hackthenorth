@@ -74,6 +74,15 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
       }
     }
   })
+    .state('app.poi', {
+    url: '/poi',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/poi.html',
+        controller: 'PoiCtrl'
+      }
+    }
+  })
     .state('app.memory', {
     url: '/memory',
     views: {
