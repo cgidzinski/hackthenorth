@@ -78,7 +78,9 @@ $scope.doRefresh();
 //
 var mapOptions = {
             zoom: 20,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            disableDefaultUI: true
+
         }; 
 //        
         var map = new google.maps.Map(document.getElementById("map"), mapOptions);
@@ -86,6 +88,9 @@ var mapOptions = {
         var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 //
         
+
+
+
       navigator.geolocation.getCurrentPosition(function(pos) {
             map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
             marker = new google.maps.Marker({
@@ -100,22 +105,25 @@ var mapOptions = {
 
         $scope.map = map;
     
+  var options = {
+  enableHighAccuracy: true
+};  
 setInterval(function(){ 
 
 navigator.geolocation.getCurrentPosition(function(pos) {
             
             map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
 
-            marker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude))
+          marker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude))
 
         
  
 
-        });
+        },function(error) {},options);
 
 
 
-}, 10);
+}, 1500);
 
 
 
