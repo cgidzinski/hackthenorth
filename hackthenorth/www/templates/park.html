@@ -1,8 +1,25 @@
-<ion-view view-title="Bike Parking">
+<ion-view view-title="Waterloo Parks">
   <ion-content>
   <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
-    <ul >
-    <li ng-repeat="item in result"> {{ item.address }} </li>
-</ul>
+    
+
+
+
+
+
+<div class="list">
+
+    <a class="item" ng-repeat="item in result" href="https://www.google.ca/maps/place/{{ item.address }}">
+      <h2>{{ item.park_name }}</h2>
+      <p>{{ item.park_type }}</p>
+      <p>{{ item.address }}</p>
+    </a>
+
+    Loading
+
+</div>
+
+
+
   </ion-content>
 </ion-view>

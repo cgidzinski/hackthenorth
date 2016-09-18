@@ -52,7 +52,8 @@ angular.module('starter.controllers', ['angular-jwt'])
 
  $scope.doRefresh = function() {
        $scope.result = "";
-  $http.get("https://api.namara.io/v0/data_sets/a490dbb3-38ff-42a2-b81f-3cddc5d31b79/data/en-0?api_key=c6cbe02af40424b4401b3dc6f877c6cfe2aaa288ba215268f29d47c0dccc781b")
+       
+  $http.get("https://api.namara.io/v0/data_sets/b4735bb9-d73d-4231-a362-a3760fdf3633/data/en-0?api_key=c6cbe02af40424b4401b3dc6f877c6cfe2aaa288ba215268f29d47c0dccc781b")
     .success(function(data, status, headers,config){
 
       $scope.result = data; // for UI
@@ -95,17 +96,18 @@ var lon;
                 lon:$scope.memories[i].lon,
                 data:$scope.memories[i].data
             });
+               pmarker.setAnimation(google.maps.Animation.BOUNCE);
               //console.log(pmarker)
               google.maps.event.addListener(pmarker, 'click', function() {
     		var dist = getDistanceFromLatLonInKm(this.lat,this.lon,lat,lon)
-			if (dist < 0.025){
+			//if (dist < 0.025){
 
 			var post = "<div class='post'>"+this.data+"</div>";
 			  $ionicPopup.alert({title: "Memory", template: post});
-			}else
-			{
-			  alert("Too Far away!")
-			}
+			//}else
+			//{
+			 // alert("Too Far away!")
+			//}
 			                
         
 
@@ -138,7 +140,7 @@ var mapOptions = {
 //        
         var map = new google.maps.Map(document.getElementById("map"), mapOptions);
         var marker = google.maps.Marker;
-        var markerimage = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        var markerimage = 'http://iconshow.me/media/images/ui/ios7-icons/png/32/person_1.png';
         var pmarkerimage = 'http://orig12.deviantart.net/9e02/f/2010/076/0/7/tiny_icon_for_nicnak044_by_orcacat88.gif';  
 //
         
@@ -156,7 +158,7 @@ var mapOptions = {
                 icon: markerimage
             });
             $scope.doRefresh();
-            marker.setAnimation(google.maps.Animation.BOUNCE);
+            //marker.setAnimation(google.maps.Animation.BOUNCE);
 
         });
 
