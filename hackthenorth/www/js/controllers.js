@@ -80,7 +80,7 @@ $scope.doRefresh();
  APIreq.getmemory().then(function(response){
     if (response.data.success == true)
     {
-      console.log(response.data.message);
+      //console.log(response.data.message);
       $scope.memories = response.data.message;
           
       for (var i = $scope.memories.length - 1; i >= 0; i--) {
@@ -88,8 +88,26 @@ $scope.doRefresh();
               var pmarker = new google.maps.Marker({
                 position: new google.maps.LatLng($scope.memories[i].lat, $scope.memories[i].lon),
                 map: map,
-                title: $scope.memories[i].data
+                title: $scope.memories[i]._id,
+                lat:$scope.memories[i].lat,
+                lon:$scope.memories[i].lon,
+                data:$scope.memories[i].data
             });
+              google.maps.event.addListener(pmarker, 'click', function() {
+
+  navigator.geolocation.getCurrentPosition(function(pos) {
+if (getDistanceFromLatLonInKm(pmarker.lat,pmarker.lon,pos.coords.latitude,pos.coords.longitude) < 0.004){
+  alert(pmarker.data)
+}else
+{
+  alert("Too far away!")
+}
+                
+        });
+
+                
+
+              });
       };
 
 
@@ -129,6 +147,7 @@ var mapOptions = {
             });
             $scope.doRefresh();
             marker.setAnimation(google.maps.Animation.BOUNCE);
+
         });
 
 
@@ -230,3 +249,22 @@ navigator.geolocation.getCurrentPosition(function(pos) {
 $scope.doRefresh();
   });
 })
+
+
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1); 
+  var a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
