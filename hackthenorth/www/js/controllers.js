@@ -94,22 +94,22 @@ var lon;
                 lon:$scope.memories[i].lon,
                 data:$scope.memories[i].data
             });
+              //console.log(pmarker)
               google.maps.event.addListener(pmarker, 'click', function() {
-
-  
-    var dist =getDistanceFromLatLonInKm(pmarker.lat,pmarker.lon,lat,lon)
-if (dist < 0.025){
-  alert(pmarker.title+" "+ dist)
-}else
-{
-  alert("Too far away! " + dist)
-}
-                
+    		var dist = getDistanceFromLatLonInKm(this.lat,this.lon,lat,lon)
+			if (dist < 0.025){
+				console.log(this)
+			  alert(this.data)
+			}else
+			{
+			  alert("too far away")
+			}
+			                
         
 
                 
 
-              });
+            });
       };
 
 
