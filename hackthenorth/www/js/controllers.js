@@ -75,6 +75,34 @@ $scope.doRefresh();
     if (APIreq.tokenValid() == false) {
       $state.go('login');
     }
+
+     $scope.doRefresh = function() {
+ APIreq.getmemory().then(function(response){
+    if (response.data.success == true)
+    {
+      console.log(response.data.message);
+      $scope.memories = response.data.message;
+          
+      for (var i = $scope.memories.length - 1; i >= 0; i--) {
+        //$scope.memories[i].lat
+              var pmarker = new google.maps.Marker({
+                position: new google.maps.LatLng($scope.memories[i].lat, $scope.memories[i].lon),
+                map: map,
+                title: $scope.memories[i].data
+            });
+      };
+
+
+      $scope.$broadcast('scroll.refreshComplete');
+    }
+    else
+    {
+      $state.go('login');
+    }
+        
+    });
+ }
+
 //
 var mapOptions = {
             zoom: 20,
@@ -99,6 +127,7 @@ var mapOptions = {
                 title: "You",
                 icon: image
             });
+            $scope.doRefresh();
             marker.setAnimation(google.maps.Animation.BOUNCE);
         });
 
@@ -108,13 +137,19 @@ var mapOptions = {
   var options = {
   enableHighAccuracy: true
 };  
+
+
+
+
+google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+
 setInterval(function(){ 
 
 navigator.geolocation.getCurrentPosition(function(pos) {
             
             map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
 
-          marker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude))
+          marker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
 
         
  
@@ -126,7 +161,7 @@ navigator.geolocation.getCurrentPosition(function(pos) {
 }, 1500);
 
 
-
+});
 //
   });
  })
