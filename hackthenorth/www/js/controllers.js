@@ -70,7 +70,7 @@ $scope.doRefresh();
 
 
 
-.controller('HomeCtrl', function($scope, $state, APIreq, $http, $cordovaGeolocation) {
+.controller('HomeCtrl', function($scope, $state, APIreq, $http, $cordovaGeolocation, $ionicPopup) {
   $scope.$on('$ionicView.enter', function(e) {
     if (APIreq.tokenValid() == false) {
       $state.go('login');
@@ -99,7 +99,8 @@ var lon;
     		var dist = getDistanceFromLatLonInKm(this.lat,this.lon,lat,lon)
 			if (dist < 0.025){
 				console.log(this)
-			  alert(this.data)
+			var post = "<div class='post'>"+this.data+"</div>";
+			  $ionicPopup.alert({title: "Memory", template: post});
 			}else
 			{
 			  alert("too far away")
@@ -127,7 +128,10 @@ var lon;
 var mapOptions = {
             zoom: 20,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
-            disableDefaultUI: true
+            disableDefaultUI: true,
+            draggable: false,
+			scrollwheel: false,
+			panControl: false
 
         }; 
 //        
