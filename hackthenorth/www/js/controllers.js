@@ -75,21 +75,27 @@ $scope.doRefresh();
     if (APIreq.tokenValid() == false) {
       $state.go('login');
     }
-var lat;
-var lon;
+	var lat;
+	var lon;
      $scope.doRefresh = function() {
- APIreq.getmemory().then(function(response){
+ 	APIreq.getmemory().then(function(response){
     if (response.data.success == true)
     {
       //console.log(response.data.message);
       $scope.memories = response.data.message;
-          
+	var template = [
+    '<?xml version="1.0"?>',
+    '<svg width="120px" height="120px" viewBox="0 0 100 100" version="2.0" xmlns="http://www.w3.org/2000/svg">',
+    '<circle cx="50" cy="50" r="40" stroke="{{ color }}" stroke-width="8" fill="none"/>',
+    '</svg>'
+    ].join('\n');
+    var svg = template.replace('{{ color }}', '#333');
       for (var i = $scope.memories.length - 1; i >= 0; i--) {
         //$scope.memories[i].lat
               var pmarker = new google.maps.Marker({
                 position: new google.maps.LatLng($scope.memories[i].lat, $scope.memories[i].lon),
                 map: map,
-                icon: pmarkerimage,
+                icon: { url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg) },
                 title: $scope.memories[i]._id,
                 lat:$scope.memories[i].lat,
                 lon:$scope.memories[i].lon,
@@ -99,7 +105,7 @@ var lon;
               google.maps.event.addListener(pmarker, 'click', function() {
     		var dist = getDistanceFromLatLonInKm(this.lat,this.lon,lat,lon)
 			if (dist < 0.025){
-
+				//this.setIcon("../img/landing.png")
 			var post = "<div class='post'>"+this.data+"</div>";
 			  $ionicPopup.alert({title: "Memory", template: post});
 			}else
@@ -126,7 +132,7 @@ var lon;
  }
 
 //
-var mapOptions = {
+		var mapOptions = {
             zoom: 20,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             disableDefaultUI: true,
@@ -135,11 +141,13 @@ var mapOptions = {
 			panControl: false
 
         }; 
-//        
+        console.log("test")
+//      
+	
+		debugger;
         var map = new google.maps.Map(document.getElementById("map"), mapOptions);
         var marker = google.maps.Marker;
-        var markerimage = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-        var pmarkerimage = 'http://orig12.deviantart.net/9e02/f/2010/076/0/7/tiny_icon_for_nicnak044_by_orcacat88.gif';  
+        var markerimage = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'; 
 //
         
 
