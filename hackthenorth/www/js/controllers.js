@@ -89,6 +89,7 @@ var lon;
               var pmarker = new google.maps.Marker({
                 position: new google.maps.LatLng($scope.memories[i].lat, $scope.memories[i].lon),
                 map: map,
+                icon: pmarkerimage,
                 title: $scope.memories[i]._id,
                 lat:$scope.memories[i].lat,
                 lon:$scope.memories[i].lon,
@@ -98,11 +99,11 @@ var lon;
               google.maps.event.addListener(pmarker, 'click', function() {
     		var dist = getDistanceFromLatLonInKm(this.lat,this.lon,lat,lon)
 			if (dist < 0.025){
-				console.log(this)
+				//console.log(this)
 			  alert(this.data)
 			}else
 			{
-			  alert("too far away")
+			  alert("Too Far away!")
 			}
 			                
         
@@ -133,7 +134,8 @@ var mapOptions = {
 //        
         var map = new google.maps.Map(document.getElementById("map"), mapOptions);
         var marker = google.maps.Marker;
-        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        var markerimage = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        var pmarkerimage = 'http://orig12.deviantart.net/9e02/f/2010/076/0/7/tiny_icon_for_nicnak044_by_orcacat88.gif';  
 //
         
 
@@ -147,7 +149,7 @@ var mapOptions = {
                 position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
                 map: map,
                 title: "You",
-                icon: image
+                icon: markerimage
             });
             $scope.doRefresh();
             marker.setAnimation(google.maps.Animation.BOUNCE);
