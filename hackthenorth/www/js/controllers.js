@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['angular-jwt'])
+angular.module('starter.controllers', ['angular-jwt', 'ngCordova'])
 .controller('AppCtrl', function($scope, $ionicPopup, $http, $state) {
   $scope.logout = function() {
     window.localStorage.removeItem('LOCAL_TOKEN_KEY');
@@ -114,16 +114,22 @@ var lon;
                 lon:$scope.memories[i].lon,
                 data:$scope.memories[i].data,
                 author:$scope.memories[i].author,
-                date:$scope.memories[i].date
+                date:$scope.memories[i].date,
+                type:$scope.memories[i].type
             });
                pmarker.setAnimation(google.maps.Animation.BOUNCE);
               //console.log(pmarker)
               google.maps.event.addListener(pmarker, 'click', function() {
         var dist = getDistanceFromLatLonInKm(this.lat,this.lon,lat,lon)
       //if (dist < 0.025){
+        var post = "<div class='post'>"+this.data+"<br><br><p>Date: "+this.date+"</p><p>Author: "+ this.author+"</p></div>";
 
-      var post = "<div class='post'>"+this.data+"<br><br><p>Date: "+this.date+"</p><p>Author: "+ this.author+"</p></div>";
-        $ionicPopup.alert({title: "Text Memory", template: post});
+        if (this.type == "image"){
+ post = "<div class='post'><img src='"+this.data+"'><br><br><p>Date: "+this.date+"</p><p>Author: "+ this.author+"</p></div>";
+        }
+        
+     
+        $ionicPopup.alert({title: "Memory", template: post});
       //}else
       //{
        // alert("Too Far away!")
@@ -219,7 +225,7 @@ navigator.geolocation.getCurrentPosition(function(pos) {
   });
  })
 
-.controller('MemoryCtrl', function($scope, $state, APIreq, $http, $ionicPopup) {
+.controller('MemoryCtrl', function($scope, $state, APIreq, $http, $ionicPopup,$cordovaCamera) {
   $scope.$on('$ionicView.enter', function(e) {
     if (APIreq.tokenValid() == false) {
       $state.go('login');
@@ -258,6 +264,106 @@ navigator.geolocation.getCurrentPosition(function(pos) {
    
     };
   });
+
+   $scope.takePicture = function() {
+       var options = { quality : 75, destinationType : navigator.camera.DestinationType.FILE_URI, sourceType : navigator.camera.PictureSourceType.CAMERA, encodingType: Camera.EncodingType.JPEG, targetWidth: 300, targetHeight: 300, popoverOptions: CameraPopoverOptions, saveToPhotoAlbum: false }
+ 
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+          //alert(imageData);
+           //$scope.imgURI = "data:image/jpeg;base64," + imageData;
+
+navigator.geolocation.getCurrentPosition(function(pos) {
+     
+ APIreq.postmemory(pos.coords.latitude,pos.coords.longitude,imageData, "image").then(function(res) {
+          if (res.data.success == true) {
+            var alertPopup = $ionicPopup.alert({title: 'Memory Submitted'});
+            $scope.memory.data = "";
+         $scope.doRefresh(); 
+          } 
+        });
+        });
+
+
+//  var config = {
+//     apiKey: "AIzaSyDh9zBrjKikMHSVUWYb_ISfKhUvZP0WhPo",
+//     authDomain: "hackthenorth-dd6a2.firebaseapp.com",
+//     databaseURL: "https://hackthenorth-dd6a2.firebaseio.com",
+//     storageBucket: "hackthenorth-dd6a2.appspot.com",
+//     messagingSenderId: "506669553152"
+//   };
+//   firebase.initializeApp(config);
+//   var storage = firebase.storage();
+
+
+// // File or Blob named mountains.jpg
+// var file = "data:image/jpeg;base64," + imageData;
+// alert("loading")
+// // Create the file metadata
+// var metadata = {
+//   contentType: 'image/jpeg'
+// };
+
+// // Upload file and metadata to the object 'images/mountains.jpg'
+// var uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
+
+// // Listen for state changes, errors, and completion of the upload.
+// uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+//   function(snapshot) {
+//     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+//     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//     alert('Upload is ' + progress + '% done');
+//     switch (snapshot.state) {
+//       case firebase.storage.TaskState.PAUSED: // or 'paused'
+//         alert('Upload is paused');
+//         break;
+//       case firebase.storage.TaskState.RUNNING: // or 'running'
+//         alert('Upload is running');
+//         break;
+//     }
+//   }, function(error) {
+//   switch (error.code) {
+//     case 'storage/unauthorized':
+//       // User doesn't have permission to access the object
+//       alert('Err au');
+//       break;
+
+//     case 'storage/canceled':
+//       // User canceled the upload
+//       alert('Err c');
+//       break;
+
+    
+
+//     case 'storage/unknown':
+//       // Unknown error occurred, inspect error.serverResponse
+//       alert('Err u');
+//       break;
+//   }
+// }, function() {
+//   // Upload completed successfully, now we can get the download URL
+//   var downloadURL = uploadTask.snapshot.downloadURL;
+//   alert(downloadURL);
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }, function(err) {
+           alert(error);
+            // An error occured. Show a message to the user
+        });
+    }
+
+
 })
 
 
@@ -282,6 +388,8 @@ navigator.geolocation.getCurrentPosition(function(pos) {
  }
 $scope.doRefresh();
   });
+
+
 })
 
 

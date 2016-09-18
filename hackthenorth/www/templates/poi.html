@@ -9,7 +9,7 @@
 
 <div class="list">
 
-    <a class="item" ng-repeat="item in result" href="https://www.google.ca/maps/place/{{ item.address }}">
+    <a class="item" ng-repeat="item in result" href="" onclick="window.open('https://www.google.ca/maps/place/{{ item.address }}', '_system', 'location=yes'); return false;">
       <h2>{{ item.facility }}</h2>
       <p>{{ item.type }}</p>
       <p>{{ item.address }}</p>

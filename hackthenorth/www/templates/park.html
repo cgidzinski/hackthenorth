@@ -5,11 +5,9 @@
 
 
 
-
-
 <div class="list">
 
-    <a class="item" ng-repeat="item in result" href="https://www.google.ca/maps/place/{{ item.address }}">
+    <a class="item" ng-repeat="item in result" ng-href="https://www.google.ca/maps/place/{{ item.address }}" onclick="window.open(this.href, '_system', 'location=yes'); return false;">
       <h2>{{ item.park_name }}</h2>
       <p>{{ item.park_type }}</p>
       <p>{{ item.address }}</p>
